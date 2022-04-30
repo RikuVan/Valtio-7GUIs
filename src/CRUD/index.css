@@ -1,0 +1,20 @@
+select {
+  width: 416px;
+}
+
+.buttons {
+  display: flex;
+  width: 416px;
+}
+
+.buttons > button {
+  width: calc(416px / 3);
+}
+
+.buttons > button + button {
+  margin-left: 4px;
+}
+
+input[name='filter'] {
+  width: 396px;
+}

@@ -1,0 +1,20 @@
+.timer {
+  width: 100%;
+}
+.progress-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.progress-container > progress {
+  width: 100%;
+  margin-right: 12px;
+}
+
+.progress-container > label {
+  width: 50px;
+}
+
+.timer > input {
+  width: 50%;
+}

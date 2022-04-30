@@ -1,0 +1,45 @@
+.adjuster {
+  position: relative;
+  text-align: center;
+  border: var(--border);
+  width: 300px;
+  border: var(--border);
+  margin-top: -30px;
+}
+
+.adjuster > input {
+  width: 100%;
+}
+
+svg {
+  background-color: var(--background);
+  width: 100%;
+  height: 500px;
+  cursor: pointer;
+}
+
+circle {
+  stroke: var(--border);
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closer {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  padding: 0.3em;
+  cursor: pointer;
+  color: var(--highlight);
+  background: var(--background-alt);
+  border-radius: 3px;
+}
+
+.closer:hover {
+  background: var(--button-hover);
+  border: 1px solid var(--border);
+}
