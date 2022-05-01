@@ -1,0 +1,3 @@
+[GUIs benchmark](https://eugenkiss.github.io/7guis/) with [Valtio](https://valtio.pmnd.rs/)
+
+The is more a benchmark of using Valtio with React than of React itself. My hypothesis is that Valtio makes handling state dead easy. Let's find out...
