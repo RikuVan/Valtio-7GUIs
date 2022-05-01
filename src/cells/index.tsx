@@ -17,6 +17,7 @@ const setEditing = (id: string | undefined) => {
 	uiState.active = id
 }
 
+// thanks to Jotai version :)
 const evalCell = (exp: string) => {
 	if (!exp.startsWith("=")) {
 		return exp
@@ -40,14 +41,78 @@ const evalCell = (exp: string) => {
 	}
 }
 
+// keyboard nav helpers
+const findUp = (col: number, row: number) => {
+	if (row === 0) {
+		return `${getColId(col)}99`
+	}
+	return `${getColId(col)}${row - 1}`
+}
+const findDown = (col: number, row: number) => {
+	if (row === 99) {
+		return `${getColId(col)}0`
+	}
+	return `${getColId(col)}${row + 1}`
+}
+const findLeft = (col: number, row: number) => {
+	console.log(col, row)
+	if (col === 0) {
+		if (row === 0) {
+			return `${getColId(25)}99`
+		}
+		return `${getColId(25)}${row - 1}`
+	}
+	return `${getColId(col - 1)}${row}`
+}
+const findRight = (col: number, row: number) => {
+	if (col === 25) {
+		if (row === 99) {
+			return `${getColId(0)}0`
+		}
+		return `${getColId(0)}${row + 1}`
+	}
+	return `${getColId(col + 1)}${row}`
+}
+
+type NavigationKey = "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
+const navigateToCell = (id: String, key: NavigationKey) => {
+	const col = id.charCodeAt(0) - "A".charCodeAt(0)
+	const row = Number(id.slice(1))
+	switch (key) {
+		case "ArrowUp":
+			return setEditing(findUp(col, row))
+		case "ArrowDown":
+			return setEditing(findDown(col, row))
+		case "ArrowLeft":
+			return setEditing(findLeft(col, row))
+		case "ArrowRight":
+			return setEditing(findRight(col, row))
+	}
+}
+
 const Cell = React.memo(({id, exp}: {id: string; exp: string}) => {
 	const uiSnap = useSnapshot(uiState)
+	const ref = React.useRef<HTMLInputElement>(null)
 	const active = uiSnap.active === id
 	const value = evalCell(exp)
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			cellState.set(id, (e.target as HTMLInputElement).value)
+		} else if (
+			["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
+		) {
+			navigateToCell(id, e.key as NavigationKey)
+			return
+		}
+	}
+
 	return (
 		<div
-			className={uiSnap.active ? "cell active" : "cell"}
-			data-id={id}
+			className={uiSnap.active === id ? "cell active" : "cell"}
+			ref={ref}
+			id={id}
+			tabIndex={-1}
 			onClick={() => {
 				setEditing(id)
 			}}
@@ -57,14 +122,9 @@ const Cell = React.memo(({id, exp}: {id: string; exp: string}) => {
 					className="cell-input"
 					defaultValue={exp}
 					autoFocus
-					onKeyDown={(e: any) => {
-						if (e.key === "Enter") {
-							cellState.set(id, e.target.value)
-						}
-					}}
+					onKeyDown={handleKeyDown}
 					onBlur={(e) => {
 						cellState.set(id, e.target.value)
-						setEditing(undefined)
 					}}
 				/>
 			) : (
@@ -85,18 +145,18 @@ const Cells = () => {
 							const key = `${column}${row}`
 							const colId = getColId(column)
 							if (row === -1 && column === -1) {
-								return <div key={key} className="cell init-col" />
+								return <div key={key} className="cell label-col" />
 							}
 							if (column === -1 && row > -1) {
 								return (
-									<div key={key} className="cell init-col">
+									<div key={key} className="cell label-col">
 										{row}
 									</div>
 								)
 							}
 							if (row === -1 && column > -1) {
 								return (
-									<div key={key} className="cell init-row">
+									<div key={key} className="cell header">
 										{colId}
 									</div>
 								)

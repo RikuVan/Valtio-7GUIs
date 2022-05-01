@@ -31,12 +31,12 @@
 	box-shadow: none;
 }
 
-.init-col {
+.label-col {
 	width: 50px;
 }
 
-.init-row,
-.init-col {
+.header,
+.label-col {
 	display: flex;
 	align-items: center;
 	justify-content: center;
