@@ -1,9 +1,19 @@
 .row {
-  display: flex;
+	display: flex;
 }
 .row > button {
-  margin-left: 12px;
+	margin-left: 12px;
 }
 section {
-  padding-bottom: 18px;
+	padding-bottom: 18px;
+}
+
+.section-title {
+	display: flex;
+	align-items: baseline;
+}
+
+.section-title > a {
+	margin-left: 12px;
+	line-height: 0;
 }
