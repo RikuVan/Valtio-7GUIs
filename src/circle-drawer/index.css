@@ -34,7 +34,7 @@ circle {
 	right: 0;
 	padding: 0.3em;
 	cursor: pointer;
-	color: var(--highlight);
+	color: var(--links);
 	background: var(--background-alt);
 	border-radius: 3px;
 }

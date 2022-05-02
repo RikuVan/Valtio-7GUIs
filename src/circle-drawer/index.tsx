@@ -36,6 +36,7 @@ const unselectCircle = () => {
 
 const addCircle = (e: React.MouseEvent<HTMLOrSVGElement>) => {
 	e.preventDefault()
+	unselectCircle()
 	if (state.selected !== undefined) return
 	const {x, y} = (e.currentTarget as any).getBoundingClientRect()
 	historyState.value.push({
@@ -104,8 +105,8 @@ const CircleDrawer = () => {
 						onClick={(e) => selectCircle(e, index)}
 						fill={
 							index === snap.selected
-								? "var(--highlight)"
-								: "var(--background-alt)"
+								? "var(--selection)"
+								: "var(--button-base)"
 						}
 					/>
 				))}
