@@ -64,6 +64,7 @@ const CircleDrawer = () => {
 							unselectCircle()
 							snap.circleHistory.undo()
 						}}
+						disabled={!snap.circleHistory.canUndo()}
 					>
 						Undo
 					</button>
@@ -72,6 +73,7 @@ const CircleDrawer = () => {
 							unselectCircle()
 							snap.circleHistory.redo()
 						}}
+						disabled={!snap.circleHistory.canRedo()}
 					>
 						Redo
 					</button>
